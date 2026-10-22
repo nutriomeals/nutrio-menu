@@ -115,7 +115,7 @@ protein:[
 ['shrimp_cream','جمبري بالكريمة','Creamy Shrimp',R(240,270),R(28,32),R(4,6),R(10,12)],
 ['veg_beef','لحم بالخضار','Beef & Veggies',R(280,320),R(32,36),R(6,8),R(12,15)],
 ['salmon','سمك فيليه مشوي','Grilled Fish Fillet',R(200,230),R(32,36),R(0,2),R(6,8)],
-['mexican','دجاج مكسيكي','Mexican Chicken']],
+['mexican','دجاج مكسيكي','Mexican Chicken',R(270,270),R(32,32),R(5,5),R(10,10)]],
 carb:[
 ['mandi','أرز مندي','Mandi Rice',R(200,220),R(4,5),R(42,45),R(2,3)],
 ['wedges','بطاطس مشوية','Roasted Potato Wedges',R(180,210),R(3,4),R(38,42),R(3,4)],
@@ -128,9 +128,9 @@ breakfast:[
 ['pancake','بانكيك بروتين','Protein Pancakes',R(280,320),R(20,25),R(40,45),R(4,6)],
 ['cream_rice','كريمة الأرز','Cream of Rice',R(200,240),R(4,6),R(45,50),R(1,2)],
 ['cornflakes','كورن فليكس صحي','Healthy Corn Flakes',R(210,250),R(8,10),R(42,46),R(2,3)]]};
-const T={ar:{h1:'وجباتك الصحية.. جاهزة كل يوم',sub:'اختر ما تفضله من البروتين والكارب والفطور، وسنقوم بتنسيق الوجبات وتوزيعها لك على أيام الأسبوع.',cold:'اشتراك وجبات باردة',hot:'اشتراك وجبات ساخنة',cur:'ريال',follow:'تابعنا',dur:'الاشتراك لمدة 26 يومًا للوجبات الباردة والساخنة',menu:'أطباقنا',pick:'بإمكانك اختيار جميع الأصناف إذا رغبت بذلك',protein:'بروتين',carb:'كارب',breakfast:'فطور',kcal:'سعرة',p:'بروتين',c:'كارب',f:'دهون',g:'جم',na:'القيم الغذائية قريبًا',
+const T={ar:{h1:'وجباتك الصحية.. جاهزة كل يوم',sub:'اختر ما تفضله من البروتين والكارب والفطور، وسنقوم بتنسيق الوجبات وتوزيعها لك على أيام الأسبوع.',cold:'اشتراك وجبات باردة',hot:'اشتراك وجبات ساخنة',cur:'ريال',follow:'تواصل معنا',dur:'الاشتراك لمدة 26 يومًا للوجبات الباردة والساخنة',menu:'أطباقنا',pick:'بإمكانك اختيار جميع الأصناف إذا رغبت بذلك',protein:'بروتين',carb:'كارب',breakfast:'فطور',kcal:'سعرة',p:'بروتين',c:'كارب',f:'دهون',g:'جم',na:'القيم الغذائية قريبًا',
 note:{protein:'الحصة الرئيسية ~150 جم مطبوخ. القيم تقديرية مبنية على أوزان حصص معيارية وطرق طهي صحية، وقد تختلف الفعلية بنسب بسيطة حسب الأوزان المحددة وطبيعة الصوصات المستخدمة.',carb:'القيم تقديرية مبنية على أوزان حصص معيارية وطرق طهي صحية، وقد تختلف الفعلية بنسب بسيطة.',breakfast:'القيم تقديرية مبنية على أوزان حصص معيارية وطرق طهي صحية، وقد تختلف الفعلية بنسب بسيطة.'}},
-en:{h1:'Your healthy meals, ready every day',sub:'Pick your favorite protein, carb and breakfast, and we will organize and distribute your meals across the week.',cold:'Cold meals plan',hot:'Hot meals plan',cur:'SAR',follow:'Follow us',dur:'The subscription is for 26 days for both cold and hot meals',menu:'Our dishes',pick:'You can choose all the items if you wish',protein:'Protein',carb:'Carbs',breakfast:'Breakfast',kcal:'kcal',p:'Protein',c:'Carbs',f:'Fat',g:'g',na:'Nutrition values coming soon',
+en:{h1:'Your healthy meals, ready every day',sub:'Pick your favorite protein, carb and breakfast, and we will organize and distribute your meals across the week.',cold:'Cold meals plan',hot:'Hot meals plan',cur:'SAR',follow:'Contact us',dur:'The subscription is for 26 days for both cold and hot meals',menu:'Our dishes',pick:'You can choose all the items if you wish',protein:'Protein',carb:'Carbs',breakfast:'Breakfast',kcal:'kcal',p:'Protein',c:'Carbs',f:'Fat',g:'g',na:'Nutrition values coming soon',
 note:{protein:'Main portion ~150g cooked. Values are estimates based on standard portion sizes and healthy cooking methods; actual values may vary slightly with exact weights and sauces used.',carb:'Values are estimates based on standard portion sizes and healthy cooking methods; actual values may vary slightly.',breakfast:'Values are estimates based on standard portion sizes and healthy cooking methods; actual values may vary slightly.'}}};
 let L='ar',tab='protein';
 const $=s=>document.querySelector(s),rg=r=>'<bdi dir="ltr">'+(r[0]===r[1]?r[0]:r[0]+'–'+r[1])+'</bdi>';
