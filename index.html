@@ -93,6 +93,13 @@ footer img{height:34px;margin-bottom:8px}
 .sh-pol ul{margin:6px 0 0;padding-inline-start:18px}
 .sh-pol li{margin:4px 0}
 .sh-agree{text-align:center;font-size:12.5px;color:var(--mut);margin:0 0 12px}
+.sh-buy{display:grid;gap:10px;margin:0 0 12px}
+.sh-buy label{display:block;font-size:13px;font-weight:700;color:var(--g);margin-bottom:4px}
+.sh-buy input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:12px 14px;border:1.5px solid #17332733;border-radius:12px;background:#fff;color:var(--g);outline:0}
+.sh-buy input:focus{border-color:var(--o)}
+.sh-buy input.bad{border-color:#8a2f2f}
+.sh-buy #b-ph{direction:ltr;text-align:start}
+.sh-hint{text-align:center;font-size:12.5px;color:#8a2f2f;margin:0 0 10px;min-height:18px}
 .sh-msg{text-align:center;font-size:14px;line-height:1.9;color:var(--mut)}
 .sh-msg a{display:inline-block;margin-top:10px;background:var(--o);color:var(--c);padding:10px 24px;border-radius:99px;text-decoration:none;font-weight:700}
 .toast{position:fixed;top:72px;inset-inline:16px;z-index:60;max-width:460px;margin:auto;padding:14px 18px;border-radius:14px;font-weight:700;font-size:14px;line-height:1.8;text-align:center;box-shadow:0 10px 30px #0005;animation:rise .4s both}
@@ -133,6 +140,11 @@ footer img{height:34px;margin-bottom:8px}
 <p class="sh-dur" data-t="dur"></p>
 <details class="sh-pol" open><summary data-t="pol_t"></summary><ul><li data-t="pol1"></li><li data-t="pol2"></li><li data-t="pol3"></li></ul></details>
 <p class="sh-agree" data-t="pol_ok"></p>
+<div class="sh-buy" id="buyer" hidden>
+<div><label for="b-nm" data-t="nm_l"></label><input id="b-nm" type="text" autocomplete="name" maxlength="60"></div>
+<div><label for="b-ph" data-t="ph_l"></label><input id="b-ph" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" dir="ltr"></div>
+</div>
+<p class="sh-hint" id="sh-hint" hidden></p>
 <div class="mysr-form" id="payform"></div>
 <p class="sh-msg" id="sh-msg"></p>
 </div></div>
@@ -167,9 +179,9 @@ breakfast:[
 ['pancake','بانكيك بروتين','Protein Pancakes',R(280,320),R(20,25),R(40,45),R(4,6)],
 ['cream_rice','كريمة الأرز','Cream of Rice',R(200,240),R(4,6),R(45,50),R(1,2)],
 ['cornflakes','كورن فليكس صحي','Healthy Corn Flakes',R(210,250),R(8,10),R(42,46),R(2,3)]]};
-const T={ar:{h1:'وجباتك الصحية.. جاهزة كل يوم',sub:'اختر ما تفضله من البروتين والكارب والفطور، وسنقوم بتنسيق الوجبات وتوزيعها لك على أيام الأسبوع.',cold:'اشتراك وجبات باردة',hot:'اشتراك وجبات ساخنة',cur:'ريال',subscribe:'اشترك الآن',soon:'الدفع الإلكتروني سيتوفر قريبًا. للاشتراك الآن تواصل معنا عبر واتساب.',noap:'الدفع عبر Apple Pay متاح على أجهزة Apple من متصفح Safari. للاشتراك من جهاز آخر تواصل معنا عبر واتساب.',err:'تعذّر تحميل بوابة الدفع. حاول مرة أخرى أو تواصل معنا عبر واتساب.',wa:'تواصل عبر واتساب',paid:'تم الدفع بنجاح ✅ شكرًا لاشتراكك في Nutrio Meals، سنتواصل معك قريبًا.',failed:'لم تكتمل عملية الدفع. حاول مرة أخرى أو تواصل معنا.',follow:'تواصل معنا',dur:'الاشتراك لمدة 26 يومًا للوجبات الباردة والساخنة',pol_t:'سياسة الإلغاء والتجميد',pol1:'الإلغاء قبل بداية الاشتراك وقبل بدء تجهيز أي طلب: يُلغى الاشتراك ويُعاد كامل المبلغ المدفوع.',pol2:'الإلغاء بعد بداية الاشتراك: لا يُردّ المبلغ المتبقي نقدًا، وتُحوَّل قيمة الأيام غير المستخدمة إلى رصيد في حسابك يُستخدم في اشتراك لاحق، وصلاحيته سنة.',pol3:'التجميد: مجاني لإيقاف الخدمة مؤقتًا، ويُطلب قبل بداية الفترة بثلاثة أيام كاملة على الأقل، وتُضاف أيام التجميد إلى نهاية الاشتراك.',pol_ok:'بإتمام الدفع فإنك توافق على سياسة الإلغاء والتجميد.',menu:'أطباقنا',pick:'بإمكانك اختيار جميع الأصناف إذا رغبت بذلك',protein:'بروتين',carb:'كارب',breakfast:'فطور',kcal:'سعرة',p:'بروتين',c:'كارب',f:'دهون',g:'جم',na:'القيم الغذائية قريبًا',
+const T={ar:{h1:'وجباتك الصحية.. جاهزة كل يوم',sub:'اختر ما تفضله من البروتين والكارب والفطور، وسنقوم بتنسيق الوجبات وتوزيعها لك على أيام الأسبوع.',cold:'اشتراك وجبات باردة',hot:'اشتراك وجبات ساخنة',cur:'ريال',subscribe:'اشترك الآن',soon:'الدفع الإلكتروني سيتوفر قريبًا. للاشتراك الآن تواصل معنا عبر واتساب.',noap:'الدفع عبر Apple Pay متاح على أجهزة Apple من متصفح Safari. للاشتراك من جهاز آخر تواصل معنا عبر واتساب.',err:'تعذّر تحميل بوابة الدفع. حاول مرة أخرى أو تواصل معنا عبر واتساب.',wa:'تواصل عبر واتساب',paid:'تم الدفع بنجاح ✅ شكرًا لاشتراكك في Nutrio Meals، سنتواصل معك قريبًا.',failed:'لم تكتمل عملية الدفع. حاول مرة أخرى أو تواصل معنا.',follow:'تواصل معنا',dur:'الاشتراك لمدة 26 يومًا للوجبات الباردة والساخنة',pol_t:'سياسة الإلغاء والتجميد',pol1:'الإلغاء قبل بداية الاشتراك وقبل بدء تجهيز أي طلب: يُلغى الاشتراك ويُعاد كامل المبلغ المدفوع.',pol2:'الإلغاء بعد بداية الاشتراك: لا يُردّ المبلغ المتبقي نقدًا، وتُحوَّل قيمة الأيام غير المستخدمة إلى رصيد في حسابك يُستخدم في اشتراك لاحق، وصلاحيته سنة.',pol3:'التجميد: مجاني لإيقاف الخدمة مؤقتًا، ويُطلب قبل بداية الفترة بثلاثة أيام كاملة على الأقل، وتُضاف أيام التجميد إلى نهاية الاشتراك.',pol_ok:'بإتمام الدفع فإنك توافق على سياسة الإلغاء والتجميد.',nm_l:'الاسم',nm_p:'الاسم الكامل',ph_l:'رقم الجوال',ph_p:'05XXXXXXXX',hint_need:'أدخل الاسم ورقم الجوال لتفعيل الدفع.',hint_nm:'اكتب الاسم الكامل.',hint_ph:'اكتب رقم جوال سعودي صحيح، مثل 05XXXXXXXX.',menu:'أطباقنا',pick:'بإمكانك اختيار جميع الأصناف إذا رغبت بذلك',protein:'بروتين',carb:'كارب',breakfast:'فطور',kcal:'سعرة',p:'بروتين',c:'كارب',f:'دهون',g:'جم',na:'القيم الغذائية قريبًا',
 note:{protein:'الحصة الرئيسية ~150 جم مطبوخ. القيم تقديرية مبنية على أوزان حصص معيارية وطرق طهي صحية، وقد تختلف الفعلية بنسب بسيطة حسب الأوزان المحددة وطبيعة الصوصات المستخدمة.',carb:'القيم تقديرية مبنية على أوزان حصص معيارية وطرق طهي صحية، وقد تختلف الفعلية بنسب بسيطة.',breakfast:'القيم تقديرية مبنية على أوزان حصص معيارية وطرق طهي صحية، وقد تختلف الفعلية بنسب بسيطة.'}},
-en:{h1:'Your healthy meals, ready every day',sub:'Pick your favorite protein, carb and breakfast, and we will organize and distribute your meals across the week.',cold:'Cold meals plan',hot:'Hot meals plan',cur:'SAR',subscribe:'Subscribe now',soon:'Online payment is coming soon. Contact us on WhatsApp to subscribe now.',noap:'Apple Pay is available on Apple devices in Safari. To subscribe from another device, contact us on WhatsApp.',err:'The payment gateway could not be loaded. Please try again or contact us on WhatsApp.',wa:'Chat on WhatsApp',paid:'Payment successful ✅ Thank you for subscribing to Nutrio Meals. We will contact you soon.',failed:'Payment was not completed. Please try again or contact us.',follow:'Contact us',dur:'The subscription is for 26 days for both cold and hot meals',pol_t:'Cancellation & freeze policy',pol1:'Cancel before the subscription starts and before any order enters preparation: the subscription is cancelled and the full amount paid is refunded.',pol2:'Cancel after the subscription has started: the remaining amount is not refunded in cash. The value of unused days is converted into credit in your account for a future subscription, valid for one year.',pol3:'Freeze: free of charge to pause the service temporarily. Request it at least three full days before the period starts. Frozen days are added to the end of your subscription.',pol_ok:'By completing the payment you agree to the cancellation and freeze policy.',menu:'Our dishes',pick:'You can choose all the items if you wish',protein:'Protein',carb:'Carbs',breakfast:'Breakfast',kcal:'kcal',p:'Protein',c:'Carbs',f:'Fat',g:'g',na:'Nutrition values coming soon',
+en:{h1:'Your healthy meals, ready every day',sub:'Pick your favorite protein, carb and breakfast, and we will organize and distribute your meals across the week.',cold:'Cold meals plan',hot:'Hot meals plan',cur:'SAR',subscribe:'Subscribe now',soon:'Online payment is coming soon. Contact us on WhatsApp to subscribe now.',noap:'Apple Pay is available on Apple devices in Safari. To subscribe from another device, contact us on WhatsApp.',err:'The payment gateway could not be loaded. Please try again or contact us on WhatsApp.',wa:'Chat on WhatsApp',paid:'Payment successful ✅ Thank you for subscribing to Nutrio Meals. We will contact you soon.',failed:'Payment was not completed. Please try again or contact us.',follow:'Contact us',dur:'The subscription is for 26 days for both cold and hot meals',pol_t:'Cancellation & freeze policy',pol1:'Cancel before the subscription starts and before any order enters preparation: the subscription is cancelled and the full amount paid is refunded.',pol2:'Cancel after the subscription has started: the remaining amount is not refunded in cash. The value of unused days is converted into credit in your account for a future subscription, valid for one year.',pol3:'Freeze: free of charge to pause the service temporarily. Request it at least three full days before the period starts. Frozen days are added to the end of your subscription.',pol_ok:'By completing the payment you agree to the cancellation and freeze policy.',nm_l:'Name',nm_p:'Full name',ph_l:'Mobile number',ph_p:'05XXXXXXXX',hint_need:'Enter your name and mobile number to enable payment.',hint_nm:'Please enter your full name.',hint_ph:'Enter a valid Saudi mobile number, e.g. 05XXXXXXXX.',menu:'Our dishes',pick:'You can choose all the items if you wish',protein:'Protein',carb:'Carbs',breakfast:'Breakfast',kcal:'kcal',p:'Protein',c:'Carbs',f:'Fat',g:'g',na:'Nutrition values coming soon',
 note:{protein:'Main portion ~150g cooked. Values are estimates based on standard portion sizes and healthy cooking methods; actual values may vary slightly with exact weights and sauces used.',carb:'Values are estimates based on standard portion sizes and healthy cooking methods; actual values may vary slightly.',breakfast:'Values are estimates based on standard portion sizes and healthy cooking methods; actual values may vary slightly.'}}};
 let L='ar',tab='protein';
 const $=s=>document.querySelector(s),rg=r=>'<bdi dir="ltr">'+(r[0]===r[1]?r[0]:r[0]+'–'+r[1])+'</bdi>';
@@ -201,18 +213,39 @@ document.querySelector('.lang').addEventListener('click',e=>{const b=e.target.cl
 document.querySelectorAll('[data-n]').forEach(el=>{const n=+el.dataset.n,t0=performance.now();(function s(t){const p=Math.min(1,(t-t0-350)/700);el.textContent=Math.round(n*(p<0?0:1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(s)})(t0)});
 const WA='966553505646';
 function waLink(plan){const t=T[L];return 'https://wa.me/'+WA+'?text='+encodeURIComponent((L==='ar'?'أرغب في ':'I would like to subscribe to ')+t[plan])}
-function closeSheet(){const sh=$('#sheet');if(!sh)return;sh.hidden=true;$('#payform').innerHTML='';document.body.style.overflow=''}
+function closeSheet(){const sh=$('#sheet');if(!sh)return;sh.hidden=true;clearTimeout(payTimer);$('#payform').innerHTML='';document.body.style.overflow=''}
+function normPhone(v){
+ v=String(v||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[\s\-().]/g,'');
+ if(v.startsWith('+'))v=v.slice(1);if(v.startsWith('00'))v=v.slice(2);
+ if(v.startsWith('966'))v=v.slice(3);if(v.startsWith('0'))v=v.slice(1);
+ return /^5\d{8}$/.test(v)?'+966'+v:'';
+}
+let payTimer=0;
 function openPay(plan,price){
  const t=T[L],cfg=window.NUTRIO_PAY||{},key=String(cfg.publishableKey||'').trim();
  $('#sh-title').textContent=t[plan];$('#sh-amt').textContent=price;
- const pf=$('#payform'),msg=$('#sh-msg');pf.innerHTML='';msg.innerHTML='';
- const fallback=txt=>{const sp=document.createElement('span');sp.textContent=txt;const a=document.createElement('a');a.href=waLink(plan);a.target='_blank';a.rel='noopener';a.textContent=t.wa;msg.append(sp,document.createElement('br'),a)};
+ const pf=$('#payform'),msg=$('#sh-msg'),buy=$('#buyer'),hint=$('#sh-hint'),inm=$('#b-nm'),iph=$('#b-ph');
+ pf.innerHTML='';msg.innerHTML='';buy.hidden=true;hint.hidden=true;clearTimeout(payTimer);
+ const fallback=txt=>{buy.hidden=true;hint.hidden=true;const sp=document.createElement('span');sp.textContent=txt;const a=document.createElement('a');a.href=waLink(plan);a.target='_blank';a.rel='noopener';a.textContent=t.wa;msg.append(sp,document.createElement('br'),a)};
  $('#sheet').hidden=false;document.body.style.overflow='hidden';
  if(!/^pk_(live|test)_/.test(key))return fallback(t.soon);
  let ok=false;try{ok=!!(window.ApplePaySession&&ApplePaySession.canMakePayments())}catch(e){}
  if(!ok)return fallback(t.noap);
  if(!window.Moyasar)return fallback(t.err);
- try{Moyasar.init({element:'#payform',amount:price*100,currency:'SAR',description:t[plan]+' - 26 days',publishable_api_key:key,callback_url:location.origin+location.pathname,methods:['applepay'],supported_networks:['mada','visa','mastercard'],language:L,fixed_width:false,metadata:{plan:plan,days:26},apple_pay:{country:'SA',label:cfg.label||'Nutrio Meals',validate_merchant_url:'https://api.moyasar.com/v1/applepay/initiate'}})}catch(e){pf.innerHTML='';fallback(t.err)}
+ inm.placeholder=t.nm_p;iph.placeholder=t.ph_p;inm.value='';iph.value='';inm.classList.remove('bad');iph.classList.remove('bad');
+ buy.hidden=false;hint.hidden=false;hint.textContent=t.hint_need;
+ let mounted='';
+ const mount=()=>{
+  const nm=inm.value.trim().replace(/\s+/g,' '),ph=normPhone(iph.value);
+  const nmOk=nm.length>=3;
+  inm.classList.toggle('bad',!!inm.value.trim()&&!nmOk);iph.classList.toggle('bad',!!iph.value.trim()&&!ph);
+  if(!nmOk||!ph){pf.innerHTML='';mounted='';hint.hidden=false;hint.textContent=(inm.value.trim()&&!nmOk)?t.hint_nm:(iph.value.trim()&&!ph)?t.hint_ph:t.hint_need;return}
+  hint.hidden=true;
+  const sig=nm+'|'+ph;if(sig===mounted)return;mounted=sig;pf.innerHTML='';
+  try{Moyasar.init({element:'#payform',amount:price*100,currency:'SAR',description:t[plan]+' - 26 days - '+nm+' - '+ph,publishable_api_key:key,callback_url:location.origin+location.pathname,methods:['applepay'],supported_networks:['mada','visa','mastercard'],language:L,fixed_width:false,metadata:{plan:plan,days:'26',customer_name:nm,customer_phone:ph},apple_pay:{country:'SA',label:cfg.label||'Nutrio Meals',validate_merchant_url:'https://api.moyasar.com/v1/applepay/initiate'}})}catch(e){pf.innerHTML='';mounted='';fallback(t.err)}
+ };
+ const sched=()=>{clearTimeout(payTimer);payTimer=setTimeout(mount,350)};
+ inm.oninput=sched;iph.oninput=sched;
 }
 document.addEventListener('click',e=>{const b=e.target.closest('.sub');if(b)return openPay(b.dataset.plan,+b.dataset.price);if(e.target.closest('[data-close]'))closeSheet()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
